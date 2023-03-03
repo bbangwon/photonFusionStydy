@@ -40,5 +40,7 @@ public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
             Debug.Log("Spawned remote player");
 
         }
+
+        transform.name = $"P_{Object.Id}";
     }
 }

@@ -3,17 +3,11 @@ using UnityEngine;
 
 public class CharacterMovementHandler : NetworkBehaviour
 {
-    Vector2 viewInput;
-
-    float cameraRotationX = 0;
-
     NetworkCharacterControllerPrototypeCustom networkCharacterControllerPrototypeCustom;
-    Camera localCamera;
 
     private void Awake()
     {
         networkCharacterControllerPrototypeCustom = GetComponent<NetworkCharacterControllerPrototypeCustom>();
-        localCamera = GetComponentInChildren<Camera>();
     }
 
     // Start is called before the first frame update
@@ -22,28 +16,23 @@ public class CharacterMovementHandler : NetworkBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        cameraRotationX += viewInput.y * Time.deltaTime * networkCharacterControllerPrototypeCustom.viewUpDownRotationSpeed;
-        cameraRotationX = Mathf.Clamp(cameraRotationX, -90, 90);
-
-        localCamera.transform.localRotation = Quaternion.Euler(cameraRotationX, 0, 0);
-    }
-
     public override void FixedUpdateNetwork()
     {
-        if(GetInput(out NetworkInputData NetworkInputData))
+        if(GetInput(out NetworkInputData networkInputData))
         {
-            networkCharacterControllerPrototypeCustom.Rotate(NetworkInputData.rotationInput);
+            transform.forward = networkInputData.aimForwardVector;
 
-            Vector3 moveDirection = transform.forward * NetworkInputData.movementInput.y + transform.right * NetworkInputData.movementInput.x;
+            Quaternion rotation = transform.rotation;
+            rotation.eulerAngles = new Vector3 (0, rotation.eulerAngles.y, rotation.eulerAngles.z);
+            transform.rotation = rotation;
+
+            Vector3 moveDirection = transform.forward * networkInputData.movementInput.y + transform.right * networkInputData.movementInput.x;
             moveDirection.Normalize();
 
             networkCharacterControllerPrototypeCustom.Move(moveDirection);
 
             //Jump
-            if(NetworkInputData.isJumpPressed)
+            if(networkInputData.isJumpPressed)
             {
                 networkCharacterControllerPrototypeCustom.Jump();
             }
@@ -56,10 +45,5 @@ public class CharacterMovementHandler : NetworkBehaviour
     {
         if (transform.position.y < -12)
             transform.position = Utils.GetRandomSpawnPoint();
-    }
-
-    public void SetViewInputVector(Vector2 viewInput)
-    {
-        this.viewInput = viewInput; 
     }
 }

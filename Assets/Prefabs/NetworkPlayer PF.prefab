@@ -424,8 +424,8 @@ MonoBehaviour:
   acceleration: 10
   braking: 10
   maxSpeed: 2
-  rotationSpeed: 80
-  viewUpDownRotationSpeed: 60
+  rotationSpeed: 800
+  viewUpDownRotationSpeed: 600
   _IsGrounded: 0
   _Velocity: {x: 0, y: 0, z: 0}
 --- !u!114 &2833844948222295772
@@ -483,6 +483,7 @@ Transform:
   m_Children:
   - {fileID: 2289129450127755586}
   - {fileID: 2289129450801635950}
+  - {fileID: 5622525687427564840}
   m_Father: {fileID: 2289129450466718099}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -497,6 +498,7 @@ GameObject:
   - component: {fileID: 2289129450801635950}
   - component: {fileID: 2289129450801635948}
   - component: {fileID: 1962418132185463101}
+  - component: {fileID: 2381703064932723173}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -570,6 +572,19 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2289129450801635953}
   m_Enabled: 1
+--- !u!114 &2381703064932723173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2289129450801635953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 746d82cc91ffd594c80ca858d4233759, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraAnchorPoint: {fileID: 5622525687427564840}
 --- !u!1 &2289129450985027727
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,3 +780,34 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &8614127966154716971
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5622525687427564840}
+  m_Layer: 0
+  m_Name: cameraAnchorPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5622525687427564840
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8614127966154716971}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.545, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2289129450727500754}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
