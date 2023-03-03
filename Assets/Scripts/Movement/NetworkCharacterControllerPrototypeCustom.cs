@@ -7,13 +7,14 @@ using UnityEngine;
 [DisallowMultipleComponent]
 // ReSharper disable once CheckNamespace
 public class NetworkCharacterControllerPrototypeCustom : NetworkTransform {
-  [Header("Character Controller Settings")]
-  public float gravity       = -20.0f;
-  public float jumpImpulse   = 8.0f;
-  public float acceleration  = 10.0f;
-  public float braking       = 10.0f;
-  public float maxSpeed      = 2.0f;
-  public float rotationSpeed = 15.0f;
+    [Header("Character Controller Settings")]
+    public float gravity       = -20.0f;
+    public float jumpImpulse   = 8.0f;
+    public float acceleration  = 10.0f;
+    public float braking       = 10.0f;
+    public float maxSpeed      = 2.0f;
+    public float rotationSpeed = 15.0f;
+    public float viewUpDownRotationSpeed = 50.0f;
 
   [Networked]
   [HideInInspector]
@@ -114,4 +115,9 @@ public class NetworkCharacterControllerPrototypeCustom : NetworkTransform {
     Velocity   = (transform.position - previousPos) * Runner.Simulation.Config.TickRate;
     IsGrounded = Controller.isGrounded;
   }
+
+    public void Rotate(float rotationY)
+    {
+        transform.Rotate(0, rotationY * Runner.DeltaTime * rotationSpeed, 0);
+    }
 }

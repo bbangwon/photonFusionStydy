@@ -14,6 +14,8 @@ public class NetworkRunnerHandler : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = 60;
+
         networkRunner = Instantiate(networkRunnerPrefab);
         networkRunner.name = "Network runner";
 
