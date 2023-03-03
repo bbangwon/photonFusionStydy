@@ -1,6 +1,6 @@
 using Fusion;
 
-public class NetworkPlayer : SimulationBehaviour
+public class NetworkPlayer : NetworkBehaviour
 {
     // Start is called before the first frame update
     void Start()

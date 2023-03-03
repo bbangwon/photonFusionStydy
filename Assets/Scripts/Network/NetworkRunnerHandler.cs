@@ -26,10 +26,7 @@ public class NetworkRunnerHandler : MonoBehaviour
     {
         var sceneManager = runner.GetComponents(typeof(MonoBehaviour)).OfType<INetworkSceneManager>().FirstOrDefault();
 
-        if(sceneManager != null)
-        {
-            sceneManager = runner.gameObject.AddComponent<NetworkSceneManagerDefault>();
-        }
+        sceneManager ??= runner.gameObject.AddComponent<NetworkSceneManagerDefault>();
 
         runner.ProvideInput = true;
 
