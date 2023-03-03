@@ -364,6 +364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  playerModel: {fileID: 2289129450727500754}
 --- !u!114 &2121610237649867130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -495,6 +496,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2289129450801635950}
   - component: {fileID: 2289129450801635948}
+  - component: {fileID: 1962418132185463101}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -548,7 +550,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -560,6 +562,14 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!81 &1962418132185463101
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2289129450801635953}
+  m_Enabled: 1
 --- !u!1 &2289129450985027727
 GameObject:
   m_ObjectHideFlags: 0

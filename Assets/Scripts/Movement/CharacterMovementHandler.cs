@@ -19,7 +19,7 @@ public class CharacterMovementHandler : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        localCamera.gameObject.SetActive(Object.HasInputAuthority);
+
     }
 
     // Update is called once per frame
@@ -47,7 +47,15 @@ public class CharacterMovementHandler : NetworkBehaviour
             {
                 networkCharacterControllerPrototypeCustom.Jump();
             }
+
+            CheckFallRespawn();
         }
+    }
+
+    void CheckFallRespawn()
+    {
+        if (transform.position.y < -12)
+            transform.position = Utils.GetRandomSpawnPoint();
     }
 
     public void SetViewInputVector(Vector2 viewInput)

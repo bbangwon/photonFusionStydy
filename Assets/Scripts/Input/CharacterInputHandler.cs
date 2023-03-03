@@ -33,7 +33,8 @@ public class CharacterInputHandler : MonoBehaviour
         moveInputVector.x = Input.GetAxis("Horizontal");
         moveInputVector.y = Input.GetAxis("Vertical");
 
-        isJumpButtonPressed = Input.GetButtonDown("Jump");
+        if(Input.GetButtonDown("Jump"))
+            isJumpButtonPressed = true;
     }
 
     public NetworkInputData GetNetworkInput()
@@ -43,6 +44,8 @@ public class CharacterInputHandler : MonoBehaviour
         networkInputData.rotationInput = viewInputVector.x;
         networkInputData.movementInput = moveInputVector;
         networkInputData.isJumpPressed = isJumpButtonPressed;
+        isJumpButtonPressed = false;
+
         return networkInputData;
     }
 
