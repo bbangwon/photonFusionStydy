@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LocalCameraHandler : MonoBehaviour
@@ -38,7 +36,7 @@ public class LocalCameraHandler : MonoBehaviour
 
         localCamera.transform.position = cameraAnchorPoint.position;
 
-        cameraRotationX += -viewInput.y * Time.deltaTime * networkCharacterControllerPrototypeCustom.viewUpDownRotationSpeed;
+        cameraRotationX += viewInput.y * Time.deltaTime * networkCharacterControllerPrototypeCustom.viewUpDownRotationSpeed;
         cameraRotationX = Mathf.Clamp(cameraRotationX, -90, 90);
 
         cameraRotationY += viewInput.x * Time.deltaTime * networkCharacterControllerPrototypeCustom.rotationSpeed;
