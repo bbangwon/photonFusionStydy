@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 830239106878578994}
   m_Layer: 0
   m_Name: BarrelCylinder
-  m_TagString: Untagged
+  m_TagString: IgnoreLayerChange
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 830239107229149342}
   m_Layer: 0
   m_Name: AimCapsule
-  m_TagString: Untagged
+  m_TagString: IgnoreLayerChange
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -176,11 +176,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 830239107250226266}
-  - component: {fileID: 4734638808678319689}
-  - component: {fileID: 1081202749090386250}
   m_Layer: 0
   m_Name: Gun
-  m_TagString: Untagged
+  m_TagString: IgnoreLayerChange
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -203,45 +201,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4734638808678319689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 830239107250226265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ea31b1a4fe02ff498935b6fa9e47c69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  _isFiring: 0
-  fireParticleSystem: {fileID: 5229158815815889089}
---- !u!114 &1081202749090386250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 830239107250226265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObjectInterest: 1
-  DefaultInterestGroups: []
-  DestroyWhenStateAuthorityLeaves: 0
-  AllowStateAuthorityOverride: 1
-  AoiPositionSource: {fileID: 0}
-  Flags: 2305
-  NetworkGuid:
-    RawGuidValue: 7d543b0e7ab88144588c0f322ec1cbc8
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 4734638808678319689}
-  SimulationBehaviours: []
 --- !u!1 &830239108315498167
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,7 +214,7 @@ GameObject:
   - component: {fileID: 830239108315498154}
   m_Layer: 0
   m_Name: HandleCylinder
-  m_TagString: Untagged
+  m_TagString: IgnoreLayerChange
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -382,11 +341,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f96240c4ecc3f7d47abb1e79f0894994, type: 3}
---- !u!198 &5229158815815889089 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 4305694373159716129, guid: f96240c4ecc3f7d47abb1e79f0894994, type: 3}
-  m_PrefabInstance: {fileID: 8309512967248655840}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5229158815815889151 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4305694373159716127, guid: f96240c4ecc3f7d47abb1e79f0894994, type: 3}

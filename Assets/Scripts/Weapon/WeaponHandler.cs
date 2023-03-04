@@ -1,6 +1,5 @@
 using Fusion;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponHandler : NetworkBehaviour
@@ -9,6 +8,8 @@ public class WeaponHandler : NetworkBehaviour
     public bool isFiring { get; set; }
 
     public ParticleSystem fireParticleSystem;
+    public Transform aimPoint;
+    public LayerMask collisionLayers;
 
     float lastTimeFired = 0f;
 
@@ -34,6 +35,31 @@ public class WeaponHandler : NetworkBehaviour
             return;
 
         StartCoroutine(FireEffectCO());
+
+        Runner.LagCompensation.Raycast(aimPoint.position, aimForwardVector, 100, Object.InputAuthority, out var hitInfo, collisionLayers, HitOptions.IncludePhysX);
+
+        float hitDistance = 100;
+        bool isHitOtherPlayer = false;
+
+        if(hitInfo.Distance > 0)
+            hitDistance = hitInfo.Distance;
+
+        if(hitInfo.Hitbox != null)
+        {
+            Debug.Log($"{Time.time} {transform.name} hit hitbox {hitInfo.Hitbox.transform.root.name}");
+
+            isHitOtherPlayer = true;
+        }
+        else if(hitInfo.Collider != null)
+        {
+            Debug.Log($"{Time.time} {transform.name} hit PhysX collider {hitInfo.Collider.transform.name}");
+        }
+
+
+        if(isHitOtherPlayer)
+            Debug.DrawRay(aimPoint.position, aimForwardVector * hitDistance, Color.red, 1);
+        else 
+            Debug.DrawRay(aimPoint.position, aimForwardVector * hitDistance, Color.green, 1);
 
         lastTimeFired = Time.time;
     }

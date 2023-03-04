@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 546675625329733359}
   m_Layer: 0
   m_Name: Lines
-  m_TagString: Untagged
+  m_TagString: IgnoreLayerChange
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4787,7 +4787,7 @@ GameObject:
   - component: {fileID: 8911171228729188896}
   m_Layer: 0
   m_Name: Impact 90-180
-  m_TagString: Untagged
+  m_TagString: IgnoreLayerChange
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9516,7 +9516,7 @@ GameObject:
   - component: {fileID: 3807302980074202391}
   m_Layer: 0
   m_Name: Impact spikes
-  m_TagString: Untagged
+  m_TagString: IgnoreLayerChange
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14264,7 +14264,7 @@ GameObject:
   - component: {fileID: 4305694373159716124}
   m_Layer: 0
   m_Name: Gun Fire
-  m_TagString: Untagged
+  m_TagString: IgnoreLayerChange
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19187,7 +19187,7 @@ GameObject:
   - component: {fileID: 185007710352082913}
   m_Layer: 0
   m_Name: Impact 180-270
-  m_TagString: Untagged
+  m_TagString: IgnoreLayerChange
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23916,7 +23916,7 @@ GameObject:
   - component: {fileID: 7066993571236978183}
   m_Layer: 0
   m_Name: Impact 270-360
-  m_TagString: Untagged
+  m_TagString: IgnoreLayerChange
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
