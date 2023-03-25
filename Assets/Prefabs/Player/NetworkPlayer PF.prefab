@@ -362,6 +362,7 @@ GameObject:
   - component: {fileID: 7917903725501231483}
   - component: {fileID: 6935189089289557518}
   - component: {fileID: 11977476621298370}
+  - component: {fileID: 4224072955185264451}
   m_Layer: 0
   m_Name: NetworkPlayer PF
   m_TagString: Untagged
@@ -445,6 +446,7 @@ MonoBehaviour:
   - {fileID: 2833844948222295772}
   - {fileID: 6935189089289557518}
   - {fileID: 11977476621298370}
+  - {fileID: 4224072955185264451}
   SimulationBehaviours: []
 --- !u!114 &7046559431736477884
 MonoBehaviour:
@@ -546,6 +548,25 @@ MonoBehaviour:
   GizmosColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   Hitboxes:
   - {fileID: 2481814675270581545}
+--- !u!114 &4224072955185264451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2289129450466718098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bcb1b35f7a278e4db0885f80af8e9d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  _isDead: 0
+  uiOnHitColor: {r: 0.8773585, g: 0.24417053, b: 0.24417053, a: 0.83137256}
+  uiOnHitImage: {fileID: 2910199253432496316}
+  bodyMeshRenderer: {fileID: 2289129450127755588}
+  playerModel: {fileID: 2289129450727500757}
+  deathGameObjectPrefab: {fileID: 2681359038647695324, guid: 42b2a8b345881be419ecca15a1824c82, type: 3}
 --- !u!1 &2289129450727500757
 GameObject:
   m_ObjectHideFlags: 0
@@ -1070,6 +1091,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f7194cf516858a44bfd032f491bd5d6, type: 3}
+--- !u!114 &2910199253432496316 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8569298639093565053, guid: 2f7194cf516858a44bfd032f491bd5d6, type: 3}
+  m_PrefabInstance: {fileID: 6813763135768000193}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5512741724638472310 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1301091814250815159, guid: 2f7194cf516858a44bfd032f491bd5d6, type: 3}

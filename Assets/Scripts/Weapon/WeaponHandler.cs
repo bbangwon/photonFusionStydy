@@ -13,6 +13,13 @@ public class WeaponHandler : NetworkBehaviour
 
     float lastTimeFired = 0f;
 
+    HPHandler hpHandler;
+
+    private void Awake()
+    {
+        hpHandler = GetComponent<HPHandler>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +29,9 @@ public class WeaponHandler : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        if (hpHandler.isDead)
+            return;
+
         if(GetInput(out NetworkInputData networkInputData))
         {
             if(networkInputData.isFireButtonPressed)
@@ -47,6 +57,9 @@ public class WeaponHandler : NetworkBehaviour
         if(hitInfo.Hitbox != null)
         {
             Debug.Log($"{Time.time} {transform.name} hit hitbox {hitInfo.Hitbox.transform.root.name}");
+
+            if (Object.HasStateAuthority)
+                hitInfo.Hitbox.transform.root.GetComponent<HPHandler>().OnTakeDamage();
 
             isHitOtherPlayer = true;
         }
@@ -77,7 +90,7 @@ public class WeaponHandler : NetworkBehaviour
 
     static void OnFireChanged(Changed<WeaponHandler> changed)
     {
-        Debug.Log($"{Time.time} OnFireChanged value {changed.Behaviour.isFiring}");
+        //Debug.Log($"{Time.time} OnFireChanged value {changed.Behaviour.isFiring}");
 
         bool isFiringCurrent = changed.Behaviour.isFiring;
 
