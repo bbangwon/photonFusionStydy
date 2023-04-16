@@ -634,12 +634,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  _isFiring: 0
+  grenadePrefab: {fileID: 841548706521481413, guid: 764ac71d5ec1ee945983c03d2eb525c7, type: 3}
   fireParticleSystem: {fileID: 9187053572953924296}
   aimPoint: {fileID: 5622525687427564840}
   collisionLayers:
     serializedVersion: 2
     m_Bits: 129
+  _isFiring: 0
 --- !u!114 &11977476621298370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -678,6 +679,7 @@ MonoBehaviour:
   bodyMeshRenderer: {fileID: 2289129450127755588}
   playerModel: {fileID: 2289129450727500757}
   deathGameObjectPrefab: {fileID: 2681359038647695324, guid: 42b2a8b345881be419ecca15a1824c82, type: 3}
+  skipSettingStartValues: 0
 --- !u!114 &5474266126810420972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -826,6 +828,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraAnchorPoint: {fileID: 5622525687427564840}
+  localCamera: {fileID: 0}
 --- !u!1 &2289129450985027727
 GameObject:
   m_ObjectHideFlags: 0

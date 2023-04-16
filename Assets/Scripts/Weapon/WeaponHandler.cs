@@ -4,14 +4,24 @@ using UnityEngine;
 
 public class WeaponHandler : NetworkBehaviour
 {
+    [Header("Prefabs")]
+    public GrenadeHandler grenadePrefab;
+
+    [Header("Effects")]
+    public ParticleSystem fireParticleSystem;
+
+    [Header("Aim")]
+    public Transform aimPoint;
+
+    [Header("Collision")]
+    public LayerMask collisionLayers;
+
     [Networked(OnChanged = nameof(OnFireChanged))]
     public bool isFiring { get; set; }
 
-    public ParticleSystem fireParticleSystem;
-    public Transform aimPoint;
-    public LayerMask collisionLayers;
-
     float lastTimeFired = 0f;
+
+    TickTimer grenadeFireDelay = TickTimer.None;
 
     HPHandler hpHandler;
     NetworkPlayer networkPlayer;
@@ -38,6 +48,9 @@ public class WeaponHandler : NetworkBehaviour
         {
             if(networkInputData.isFireButtonPressed)
                 Fire(networkInputData.aimForwardVector);
+
+            if(networkInputData.isGrenadeFireButtonPressed)
+                FireGrenade(networkInputData.aimForwardVector);
         }        
     }
 
@@ -61,7 +74,7 @@ public class WeaponHandler : NetworkBehaviour
             Debug.Log($"{Time.time} {transform.name} hit hitbox {hitInfo.Hitbox.transform.root.name}");
 
             if (Object.HasStateAuthority)
-                hitInfo.Hitbox.transform.root.GetComponent<HPHandler>().OnTakeDamage(networkPlayer.nickName.ToString());
+                hitInfo.Hitbox.transform.root.GetComponent<HPHandler>().OnTakeDamage(networkPlayer.nickName.ToString(), 1);
 
             isHitOtherPlayer = true;
         }
@@ -77,6 +90,19 @@ public class WeaponHandler : NetworkBehaviour
             Debug.DrawRay(aimPoint.position, aimForwardVector * hitDistance, Color.green, 1);
 
         lastTimeFired = Time.time;
+    }
+
+    void FireGrenade(Vector3 aimForwardVector)
+    {
+        if(grenadeFireDelay.ExpiredOrNotRunning(Runner))
+        {
+            Runner.Spawn(grenadePrefab, aimPoint.position + aimForwardVector * 1.5f, Quaternion.LookRotation(aimForwardVector), Object.InputAuthority, (runner, spawnedGrenade) => 
+            { 
+                spawnedGrenade.GetComponent<GrenadeHandler>().Throw(aimForwardVector * 15, Object.InputAuthority, networkPlayer.nickName.ToString());
+            });
+
+            grenadeFireDelay = TickTimer.CreateFromSeconds(Runner, 1.0f);
+        }
     }
 
     IEnumerator FireEffectCO()
