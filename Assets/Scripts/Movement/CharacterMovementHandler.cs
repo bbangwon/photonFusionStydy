@@ -69,7 +69,7 @@ public class CharacterMovementHandler : NetworkBehaviour
             {
                 Debug.Log($"{Time.time} Respawn due to fall outside of map at position {transform.position}");
 
-                networkInGameMessages.SendInGameRPCMessage(networkPlayer.nickname.ToString(), "fell off the world");
+                networkInGameMessages.SendInGameRPCMessage(networkPlayer.nickName.ToString(), "fell off the world");
 
                 Respawn();
             }
