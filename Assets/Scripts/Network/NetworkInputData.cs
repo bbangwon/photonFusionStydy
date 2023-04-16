@@ -8,4 +8,5 @@ public struct NetworkInputData : INetworkInput
     public NetworkBool isJumpPressed;
     public NetworkBool isFireButtonPressed;
     public NetworkBool isGrenadeFireButtonPressed;
+    public NetworkBool isRocketLauncherFireButtonPressed;
 }

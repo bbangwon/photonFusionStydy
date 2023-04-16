@@ -7,6 +7,7 @@ public class CharacterInputHandler : MonoBehaviour
     bool isJumpButtonPressed = false;
     bool isFireButtonPressed = false;
     bool isGrenadeButtonPressed = false;
+    bool isRocketLauncherFireButtonPressed = false;
 
     LocalCameraHandler localCameraHandler;
     CharacterMovementHandler characterMovementHandler;
@@ -44,7 +45,10 @@ public class CharacterInputHandler : MonoBehaviour
         if(Input.GetButtonDown("Fire1"))
             isFireButtonPressed = true;
 
-        if(Input.GetKeyDown(KeyCode.G))
+        if (Input.GetButtonDown("Fire2"))
+            isRocketLauncherFireButtonPressed = true;
+
+        if (Input.GetKeyDown(KeyCode.G))
             isGrenadeButtonPressed = true;
 
         localCameraHandler.SetViewInputVector(viewInputVector);
@@ -58,11 +62,13 @@ public class CharacterInputHandler : MonoBehaviour
         networkInputData.movementInput = moveInputVector;
         networkInputData.isJumpPressed = isJumpButtonPressed;
         networkInputData.isFireButtonPressed = isFireButtonPressed;
+        networkInputData.isRocketLauncherFireButtonPressed = isRocketLauncherFireButtonPressed;        
         networkInputData.isGrenadeFireButtonPressed = isGrenadeButtonPressed;
 
         isJumpButtonPressed = false;
         isFireButtonPressed = false;
         isGrenadeButtonPressed = false;
+        isRocketLauncherFireButtonPressed = false;
 
         return networkInputData;
     }

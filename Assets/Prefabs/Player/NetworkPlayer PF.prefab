@@ -635,6 +635,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   grenadePrefab: {fileID: 841548706521481413, guid: 764ac71d5ec1ee945983c03d2eb525c7, type: 3}
+  rocketPrefab: {fileID: 53958928725567913, guid: ad3965869c5bcbc46ab2d3c1211a034c, type: 3}
   fireParticleSystem: {fileID: 9187053572953924296}
   aimPoint: {fileID: 5622525687427564840}
   collisionLayers:

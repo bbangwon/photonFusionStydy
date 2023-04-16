@@ -6,6 +6,7 @@ public class WeaponHandler : NetworkBehaviour
 {
     [Header("Prefabs")]
     public GrenadeHandler grenadePrefab;
+    public RocketHandler rocketPrefab;
 
     [Header("Effects")]
     public ParticleSystem fireParticleSystem;
@@ -22,14 +23,17 @@ public class WeaponHandler : NetworkBehaviour
     float lastTimeFired = 0f;
 
     TickTimer grenadeFireDelay = TickTimer.None;
+    TickTimer rocketFireDelay = TickTimer.None;
 
     HPHandler hpHandler;
     NetworkPlayer networkPlayer;
+    NetworkObject networkObject;
 
     private void Awake()
     {
         hpHandler = GetComponent<HPHandler>();
         networkPlayer = GetComponent<NetworkPlayer>();
+        networkObject = GetComponent<NetworkObject>();
     }
 
     // Start is called before the first frame update
@@ -51,6 +55,9 @@ public class WeaponHandler : NetworkBehaviour
 
             if(networkInputData.isGrenadeFireButtonPressed)
                 FireGrenade(networkInputData.aimForwardVector);
+
+            if(networkInputData.isRocketLauncherFireButtonPressed)
+                FireRocket(networkInputData.aimForwardVector);
         }        
     }
 
@@ -102,6 +109,19 @@ public class WeaponHandler : NetworkBehaviour
             });
 
             grenadeFireDelay = TickTimer.CreateFromSeconds(Runner, 1.0f);
+        }
+    }
+
+    void FireRocket(Vector3 aimForwardVector)
+    {
+        if (rocketFireDelay.ExpiredOrNotRunning(Runner))
+        {
+            Runner.Spawn(rocketPrefab, aimPoint.position + aimForwardVector * 1.5f, Quaternion.LookRotation(aimForwardVector), Object.InputAuthority, (runner, spawnedRocket) =>
+            {
+                spawnedRocket.GetComponent<RocketHandler>().Fire(Object.InputAuthority, networkObject, networkPlayer.nickName.ToString());
+            });
+
+            rocketFireDelay = TickTimer.CreateFromSeconds(Runner, 3.0f);
         }
     }
 
