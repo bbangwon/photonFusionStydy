@@ -48,17 +48,21 @@ public class HPHandler : NetworkBehaviour
             isDead = false;
         }
 
-        MeshRenderer[] meshRenderers = playerModel.GetComponentsInChildren<MeshRenderer>();
+        ResetMeshRenderers();
+        isInitialized = true;
+    }
 
-        foreach(MeshRenderer meshRenderer in meshRenderers)
+    public void ResetMeshRenderers()
+    {
+        flashMeshRenderers.Clear();
+
+        MeshRenderer[] meshRenderers = playerModel.GetComponentsInChildren<MeshRenderer>();
+        foreach (MeshRenderer meshRenderer in meshRenderers)
             flashMeshRenderers.Add(new FlashMeshRenderer(meshRenderer, null));
 
         SkinnedMeshRenderer[] skinnedMeshRenderers = playerModel.GetComponentsInChildren<SkinnedMeshRenderer>();
-
         foreach (SkinnedMeshRenderer skinnedMeshRenderer in skinnedMeshRenderers)
             flashMeshRenderers.Add(new FlashMeshRenderer(null, skinnedMeshRenderer));
-
-        isInitialized = true;
     }
 
     IEnumerator OnHitCO()

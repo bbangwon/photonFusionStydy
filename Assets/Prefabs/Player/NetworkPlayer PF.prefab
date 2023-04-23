@@ -766,6 +766,7 @@ GameObject:
   - component: {fileID: 4224072955185264451}
   - component: {fileID: 5474266126810420972}
   - component: {fileID: 6727575482672084322}
+  - component: {fileID: 5970950079023511731}
   m_Layer: 0
   m_Name: NetworkPlayer PF
   m_TagString: Untagged
@@ -860,6 +861,7 @@ MonoBehaviour:
   - {fileID: 4224072955185264451}
   - {fileID: 5474266126810420972}
   - {fileID: 6727575482672084322}
+  - {fileID: 5970950079023511731}
   SimulationBehaviours: []
 --- !u!114 &7046559431736477884
 MonoBehaviour:
@@ -981,7 +983,6 @@ MonoBehaviour:
   _isDead: 0
   uiOnHitColor: {r: 0.8773585, g: 0.24417053, b: 0.24417053, a: 0.83137256}
   uiOnHitImage: {fileID: 2910199253432496316}
-  bodyMeshRenderer: {fileID: 2289129450127755588}
   playerModel: {fileID: 2289129450727500757}
   deathGameObjectPrefab: {fileID: 2681359038647695324, guid: 42b2a8b345881be419ecca15a1824c82, type: 3}
   skipSettingStartValues: 0
@@ -1028,6 +1029,23 @@ MonoBehaviour:
     _hash: -814817977
   StateHashes: 000000008a18fce4b9abd9d3a6cf4cd23524c590
   TriggerHashes: 00000000
+--- !u!114 &5970950079023511731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2289129450466718098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b19eb29f3528f60449bd5dc6b2044084, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  playerHead: {fileID: 7508185577064885927}
+  playerBody: {fileID: 3543445184916786845}
+  playerRightArm: {fileID: 9035838476944177971}
+  playerLeftArm: {fileID: 3398114457740640801}
 --- !u!1 &2289129450727500757
 GameObject:
   m_ObjectHideFlags: 0
