@@ -6,22 +6,71 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuUIHandler : MonoBehaviour
 {
-    public TMP_InputField inputField;
+    [Header("Panels")]
+    public GameObject playerDetailsPanel;
+    public GameObject sessionBrowserPanel;
+    public GameObject createSessionPanel;
+    public GameObject statusPanel;
+
+    [Header("Player settings")]
+    public TMP_InputField playerNameInputField;
+
+    [Header("New game session")]
+    public TMP_InputField sessionNameInputField;
 
     // Start is called before the first frame update
     void Start()
     {
         if(PlayerPrefs.HasKey("PlayerNickname"))
-            inputField.text = PlayerPrefs.GetString("PlayerNickname");
+            playerNameInputField.text = PlayerPrefs.GetString("PlayerNickname");
     }
 
-    public void OnJoinGameClicked()
+    void HideAllPanels()
     {
-        PlayerPrefs.SetString("PlayerNickname", inputField.text);
+        playerDetailsPanel.SetActive(false);
+        sessionBrowserPanel.SetActive(false);
+        statusPanel.SetActive(false);
+        createSessionPanel.SetActive(false);
+    }
+
+    public void OnFindGameClicked()
+    {
+        PlayerPrefs.SetString("PlayerNickname", playerNameInputField.text);
         PlayerPrefs.Save();
 
-        GameManager.instance.playerNickName = inputField.text;
+        GameManager.instance.playerNickName = playerNameInputField.text;
 
-        SceneManager.LoadScene("World1");
+        NetworkRunnerHandler networkRunnerHandler = FindObjectOfType<NetworkRunnerHandler>();
+
+        networkRunnerHandler.OnJoinLobby();
+
+        HideAllPanels();
+
+        sessionBrowserPanel.gameObject.SetActive(true);
+
+        FindObjectOfType<SessionListUIHandler>(true).OnLookingForGameSessions();
+    }
+
+    public void OnCreateNewGameClicked()
+    {
+        HideAllPanels();
+        createSessionPanel.SetActive(true);
+    }
+
+    public void OnStartNewSessionClicked()
+    {
+        NetworkRunnerHandler networkRunnerHandler = FindObjectOfType<NetworkRunnerHandler>();
+        networkRunnerHandler.CreateGame(sessionNameInputField.text, "World1");
+
+        HideAllPanels();
+
+        statusPanel.gameObject.SetActive(true);
+    }
+
+    public void OnJoiningServer()
+    {
+        HideAllPanels();
+
+        statusPanel.gameObject.SetActive(true);
     }
 }
