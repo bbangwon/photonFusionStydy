@@ -3,12 +3,17 @@ using UnityEngine;
 
 public class CharacterMovementHandler : NetworkBehaviour
 {
+    [Header("Animator")]
+    public Animator characterAnimator;
+
     bool isRespawnRequested = false;
 
     NetworkCharacterControllerPrototypeCustom networkCharacterControllerPrototypeCustom;
     HPHandler hpHandler;
     NetworkInGameMessages networkInGameMessages;
     NetworkPlayer networkPlayer;
+
+    float walkSpeed = 0f;
 
     private void Awake()
     {
@@ -53,9 +58,13 @@ public class CharacterMovementHandler : NetworkBehaviour
 
             //Jump
             if(networkInputData.isJumpPressed)
-            {
                 networkCharacterControllerPrototypeCustom.Jump();
-            }
+
+            Vector2 walkVector = new Vector2(networkCharacterControllerPrototypeCustom.Velocity.x, networkCharacterControllerPrototypeCustom.Velocity.z);
+            walkVector.Normalize();
+
+            walkSpeed = Mathf.Lerp(walkSpeed, Mathf.Clamp01(walkVector.magnitude), Runner.DeltaTime * 5);
+            characterAnimator.SetFloat("walkSpeed", walkSpeed);
 
             CheckFallRespawn();
         }

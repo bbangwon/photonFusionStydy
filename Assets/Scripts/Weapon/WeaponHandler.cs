@@ -10,6 +10,7 @@ public class WeaponHandler : NetworkBehaviour
 
     [Header("Effects")]
     public ParticleSystem fireParticleSystem;
+    public ParticleSystem fireParticleSystemRemotePlayer;
 
     [Header("Aim")]
     public Transform aimPoint;
@@ -153,6 +154,6 @@ public class WeaponHandler : NetworkBehaviour
     void OnFireRemote()
     {
         if (!Object.HasInputAuthority)
-            fireParticleSystem.Play();
+            fireParticleSystemRemotePlayer.Play();
     }
 }

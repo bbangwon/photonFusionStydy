@@ -1,5 +1,6 @@
 using Fusion;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,8 +19,7 @@ public class HPHandler : NetworkBehaviour
     public Color uiOnHitColor;
     public Image uiOnHitImage;
 
-    public MeshRenderer bodyMeshRenderer;
-    Color defaultMeshBodyColor;
+    List<FlashMeshRenderer> flashMeshRenderers = new List<FlashMeshRenderer>();
 
     public GameObject playerModel;
     public GameObject deathGameObjectPrefab;
@@ -48,22 +48,31 @@ public class HPHandler : NetworkBehaviour
             isDead = false;
         }
 
+        MeshRenderer[] meshRenderers = playerModel.GetComponentsInChildren<MeshRenderer>();
 
-        defaultMeshBodyColor = bodyMeshRenderer.material.color;
+        foreach(MeshRenderer meshRenderer in meshRenderers)
+            flashMeshRenderers.Add(new FlashMeshRenderer(meshRenderer, null));
+
+        SkinnedMeshRenderer[] skinnedMeshRenderers = playerModel.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+        foreach (SkinnedMeshRenderer skinnedMeshRenderer in skinnedMeshRenderers)
+            flashMeshRenderers.Add(new FlashMeshRenderer(null, skinnedMeshRenderer));
 
         isInitialized = true;
     }
 
     IEnumerator OnHitCO()
     {
-        bodyMeshRenderer.material.color = Color.white;
+        foreach (FlashMeshRenderer flashMeshRenderer in flashMeshRenderers)
+            flashMeshRenderer.ChangeColor(Color.red);
 
         if (Object.HasInputAuthority)
             uiOnHitImage.color = uiOnHitColor;
 
         yield return new WaitForSeconds(0.2f);
 
-        bodyMeshRenderer.material.color = defaultMeshBodyColor;
+        foreach (FlashMeshRenderer flashMeshRenderer in flashMeshRenderers)
+            flashMeshRenderer.RestoreColor();
 
         if (Object.HasInputAuthority && !isDead)
             uiOnHitImage.color = new Color(0, 0, 0, 0);       

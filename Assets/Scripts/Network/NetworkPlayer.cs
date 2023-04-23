@@ -42,10 +42,9 @@ public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
             if(Camera.main != null)
                 Camera.main.gameObject.SetActive(false);
 
-            AudioListener audioListener = GetComponentInChildren<AudioListener>(true);
-            audioListener.enabled = true;
-
             localCameraHandler.localCamera.enabled = true;
+            localCameraHandler.gameObject.SetActive(true);
+
             localCameraHandler.transform.parent = null;
 
             localUI.SetActive(true);
@@ -57,10 +56,9 @@ public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
         else
         {
             localCameraHandler.localCamera.enabled = false;
-            localUI.SetActive(false);
+            localCameraHandler.gameObject.SetActive(false);
 
-            AudioListener audioListener = GetComponentInChildren<AudioListener>();
-            audioListener.enabled = false;
+            localUI.SetActive(false);
 
             Debug.Log("Spawned remote player");
 
