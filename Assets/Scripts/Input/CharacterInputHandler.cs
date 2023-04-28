@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharacterInputHandler : MonoBehaviour
 {
@@ -21,14 +22,15 @@ public class CharacterInputHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         if (!characterMovementHandler.Object.HasInputAuthority)
+            return;
+
+        if (SceneManager.GetActiveScene().name == "Ready")
             return;
 
         //Veiw Input

@@ -3,6 +3,7 @@ using Fusion.Sockets;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
 {
@@ -118,7 +119,21 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
             else
             {
                 Debug.Log($"Spawning new player for connection token {playerToken}");
-                NetworkPlayer spawnedNetworkPlayer = runner.Spawn(playerPrefab, Utils.GetRandomSpawnPoint(), Quaternion.identity, player);
+
+                bool isReadyScene = SceneManager.GetActiveScene().name == "Ready";
+
+                Vector3 spawnPosition = Utils.GetRandomSpawnPoint();
+
+                if(isReadyScene)
+                {
+                    if (runner.SessionInfo.MaxPlayers - player.PlayerId == 1)
+                        spawnPosition = new Vector3(-1 * 3, 1, 0);
+                    else
+                        spawnPosition = new Vector3(player.PlayerId * 3, 1, 0);
+                }
+
+                NetworkPlayer spawnedNetworkPlayer = runner.Spawn(playerPrefab, spawnPosition, Quaternion.identity, player);
+                spawnedNetworkPlayer.transform.position = spawnPosition;
 
                 spawnedNetworkPlayer.token = playerToken;
 

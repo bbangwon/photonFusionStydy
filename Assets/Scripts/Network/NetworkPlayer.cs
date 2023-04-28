@@ -1,6 +1,7 @@
 using Fusion;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
 {
@@ -34,20 +35,40 @@ public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
 
     public override void Spawned()
     {
+        bool isReadyScene = SceneManager.GetActiveScene().name == "Ready";
+
         if (Object.HasInputAuthority)
         {
             Local = this;
-            Utils.SetRenderLayerInChildren(playerModel, LayerMask.NameToLayer("LocalPlayerModel"));
 
-            if(Camera.main != null)
-                Camera.main.gameObject.SetActive(false);
+            if(isReadyScene)
+            {
+                Camera.main.transform.position = new Vector3(transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
 
-            localCameraHandler.localCamera.enabled = true;
-            localCameraHandler.gameObject.SetActive(true);
+                localCameraHandler.gameObject.SetActive(false);
 
-            localCameraHandler.transform.parent = null;
+                localUI.SetActive(false);
 
-            localUI.SetActive(true);
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else
+            {
+                Utils.SetRenderLayerInChildren(playerModel, LayerMask.NameToLayer("LocalPlayerModel"));
+
+                if (Camera.main != null)
+                    Camera.main.gameObject.SetActive(false);
+
+                localCameraHandler.localCamera.enabled = true;
+                localCameraHandler.gameObject.SetActive(true);
+
+                localCameraHandler.transform.parent = null;
+
+                localUI.SetActive(true);
+
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
 
             RPC_SetNickName(GameManager.instance.playerNickName);
 
@@ -117,5 +138,27 @@ public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
     {
         if (localCameraHandler != null)
             Destroy(localCameraHandler.gameObject);
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+    }
+
+    private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (Object == null || !Object.HasStateAuthority)
+            return;
+
+        Debug.Log($"{Time.time} OnSceneLoaded: " + scene.name);
+
+        if (scene.name != "Ready")
+        {
+            if (Object.HasInputAuthority)
+                Spawned();
+
+            GetComponent<CharacterMovementHandler>().RequestRespawn();
+        }
+
     }
 }

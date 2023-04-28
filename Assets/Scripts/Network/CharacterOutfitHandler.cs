@@ -3,6 +3,8 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CharacterOutfitHandler : NetworkBehaviour
 {
@@ -11,6 +13,12 @@ public class CharacterOutfitHandler : NetworkBehaviour
     public GameObject playerBody;
     public GameObject playerRightArm;
     public GameObject playerLeftArm;
+
+    [Header("Ready UI")]
+    public Image readyCheckboxImage;
+
+    [Header("Animation")]
+    public Animator characterAnimator;
 
     List<GameObject> headPrefabs = new List<GameObject>();
     List<GameObject> bodyPrefabs = new List<GameObject>();
@@ -27,6 +35,9 @@ public class CharacterOutfitHandler : NetworkBehaviour
 
     [Networked(OnChanged = nameof(OnOutfitChanged))]
     NetworkOutfit networkOutfit { get; set; }
+
+    [Networked(OnChanged = nameof(OnIsDoneWithCharacterSelectionChanged))]
+    public NetworkBool isDoneWithCharacterSelection { get; set; }
 
     private void Awake()
     {
@@ -45,6 +56,11 @@ public class CharacterOutfitHandler : NetworkBehaviour
 
     void Start()
     {
+        characterAnimator.SetLayerWeight(1, 0.0f);
+
+        if (SceneManager.GetActiveScene().name != "Ready")
+            return;
+
         NetworkOutfit newOutfit = networkOutfit;
 
         newOutfit.headPrefabID = (byte)Random.Range(0, headPrefabs.Count);
@@ -52,7 +68,9 @@ public class CharacterOutfitHandler : NetworkBehaviour
         newOutfit.leftArmPrefabID = (byte)Random.Range(0, leftArmPrefabs.Count);
         newOutfit.rightArmPrefabID = (byte)Random.Range(0, rightArmPrefabs.Count);
 
-        if(Object.HasInputAuthority)
+        characterAnimator.SetLayerWeight(1, 1.0f);
+
+        if (Object.HasInputAuthority)
             RPC_RequestOutfitChange(newOutfit);
     }
 
@@ -92,5 +110,110 @@ public class CharacterOutfitHandler : NetworkBehaviour
     private void OnOutfitChanged()
     {
         ReplaceBodyParts();
+    }
+
+    public void OnCycleHead()
+    {
+        NetworkOutfit newOutfit = networkOutfit;
+
+        newOutfit.headPrefabID++;
+
+        if(newOutfit.headPrefabID > headPrefabs.Count -1 )
+            newOutfit.headPrefabID = 0;
+
+        if (Object.HasInputAuthority)
+            RPC_RequestOutfitChange(newOutfit);
+    }
+
+    public void OnCycleBody()
+    {
+        NetworkOutfit newOutfit = networkOutfit;
+
+        newOutfit.bodyPrefabID++;
+
+        if (newOutfit.bodyPrefabID > bodyPrefabs.Count - 1)
+            newOutfit.bodyPrefabID = 0;
+
+        if (Object.HasInputAuthority)
+            RPC_RequestOutfitChange(newOutfit);
+    }
+
+    public void OnCycleLeftArm()
+    {
+        NetworkOutfit newOutfit = networkOutfit;
+
+        newOutfit.leftArmPrefabID++;
+
+        if (newOutfit.leftArmPrefabID > leftArmPrefabs.Count - 1)
+            newOutfit.leftArmPrefabID = 0;
+
+        if (Object.HasInputAuthority)
+            RPC_RequestOutfitChange(newOutfit);
+    }
+
+    public void OnCycleRightArm()
+    {
+        NetworkOutfit newOutfit = networkOutfit;
+
+        newOutfit.rightArmPrefabID++;
+
+        if (newOutfit.rightArmPrefabID > rightArmPrefabs.Count - 1)
+            newOutfit.rightArmPrefabID = 0;
+
+        if (Object.HasInputAuthority)
+            RPC_RequestOutfitChange(newOutfit);
+    }
+
+    public void OnReady(bool isReady)
+    {
+        if(Object.HasInputAuthority)
+        {
+            RPC_SetReady(isReady);
+        }
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    void RPC_SetReady(NetworkBool isReady, RpcInfo info = default)
+    {
+        isDoneWithCharacterSelection = isReady;
+    }
+
+    static void OnIsDoneWithCharacterSelectionChanged(Changed<CharacterOutfitHandler> changed)
+    {
+        changed.Behaviour.IsDoneWithCharacterSelectionChanged();
+    }
+
+    private void IsDoneWithCharacterSelectionChanged()
+    {
+        if (SceneManager.GetActiveScene().name != "Ready")
+        {
+            readyCheckboxImage.gameObject.SetActive(false);
+            return;
+        }
+
+        if (isDoneWithCharacterSelection)
+        {
+            characterAnimator.SetTrigger("Ready");
+            readyCheckboxImage.gameObject.SetActive(true);
+        }
+        else readyCheckboxImage.gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+    }
+
+    private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
+    {       
+        if (Object == null || !Object.HasStateAuthority)
+            return;
+
+        Debug.Log($"CharacterOutfitHandler Scene Name : {scene.name}");
+
+        if (scene.name != "Ready")
+        {            
+            readyCheckboxImage.gameObject.SetActive(false);
+        }
     }
 }
